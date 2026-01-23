@@ -1,4 +1,6 @@
-![Learn By Typing logo](./logo.png)
+<p align="center">
+  <img src="./logo.png" alt="Learn By Typing logo" width="350">
+</p>
 
 # Learn By Typing
 
@@ -38,8 +40,6 @@ Run the dev server:
 ```bash
 npm run dev
 ```
-
-Then open the URL Vite prints in your terminal (usually `http://localhost:5173`).
 
 ## Production Build
 
