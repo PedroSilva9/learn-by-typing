@@ -8,6 +8,7 @@ function App() {
   const [typed, setTyped] = useState<string>("");
   const [strict, setStrict] = useState<boolean>(true);
   const [showStats, setShowStats] = useState<boolean>(true);
+  const [showWordGloss, setShowWordGloss] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [errors, setErrors] = useState<number>(0);
@@ -37,7 +38,11 @@ function App() {
 
   const handleContainerClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (target.closest('.sidebar') || target.closest('.sidebar-toggle')) {
+    if (
+      target.closest('.sidebar') ||
+      target.closest('.sidebar-toggle') ||
+      target.closest('button, select, input, label, option')
+    ) {
       return;
     }
     inputRef.current?.focus();
@@ -102,23 +107,92 @@ function App() {
   }, [startTime, finished]);
 
   const renderText = () => {
-    return targetText.split("").map((char, index) => {
-      let className = "char pending";
-
-      if (index < typed.length) {
-        if (typed[index] === char) {
-          className = "char correct";
-        } else {
-          className = "char incorrect";
+    const tokens: Array<
+      | {
+          type: "word";
+          text: string;
+          startIndex: number;
+          wordIndex: number;
         }
-      } else if (index === typed.length) {
-        className = "char current";
+      | {
+          type: "sep";
+          text: string;
+          startIndex: number;
+        }
+    > = [];
+
+    const wordRegex = /[A-Za-zÄÖÜäöüß]+/g;
+    let match: RegExpExecArray | null;
+    let cursor = 0;
+    let wordIndex = 0;
+
+    while ((match = wordRegex.exec(targetText)) !== null) {
+      if (match.index > cursor) {
+        tokens.push({
+          type: "sep",
+          text: targetText.slice(cursor, match.index),
+          startIndex: cursor,
+        });
       }
 
+      tokens.push({
+        type: "word",
+        text: match[0],
+        startIndex: match.index,
+        wordIndex,
+      });
+
+      cursor = match.index + match[0].length;
+      wordIndex += 1;
+    }
+
+    if (cursor < targetText.length) {
+      tokens.push({
+        type: "sep",
+        text: targetText.slice(cursor),
+        startIndex: cursor,
+      });
+    }
+
+    const renderChars = (text: string, startIndex: number) => {
+      return text.split("").map((char, offset) => {
+        const index = startIndex + offset;
+        let className = "char pending";
+
+        if (index < typed.length) {
+          if (typed[index] === char) {
+            className = "char correct";
+          } else {
+            className = "char incorrect";
+          }
+        } else if (index === typed.length) {
+          className = "char current";
+        }
+
+        return (
+          <span key={index} className={className}>
+            {char}
+            {index === typed.length && <span className="cursor" />}
+          </span>
+        );
+      });
+    };
+
+    return tokens.map((token, index) => {
+      if (token.type === "sep") {
+        return (
+          <span key={`sep-${index}`} className="word-separator">
+            {renderChars(token.text, token.startIndex)}
+          </span>
+        );
+      }
+
+      const gloss = activePassage.gloss[token.wordIndex] ?? "";
+
       return (
-        <span key={index} className={className}>
-          {char}
-          {index === typed.length && <span className="cursor" />}
+        <span key={`word-${index}`} className="word-token">
+          <span className="word-text">{renderChars(token.text, token.startIndex)}</span>
+          {showWordGloss && <span className="word-gloss">{gloss}</span>}
         </span>
       );
     });
@@ -174,6 +248,20 @@ function App() {
                 ? "WPM, accuracy, and errors are visible."
                 : "Statistics are hidden for distraction-free typing."}
             </p>
+            <label className="setting-toggle">
+              <input
+                type="checkbox"
+                checked={showWordGloss}
+                onChange={(e) => setShowWordGloss(e.target.checked)}
+              />
+              <span className="toggle-switch"></span>
+              <span className="setting-label">Show Word Gloss</span>
+            </label>
+            <p className="setting-description">
+              {showWordGloss
+                ? "Single-word translations are visible under each word."
+                : "Single-word translations are hidden."}
+            </p>
           </div>
         </div>
       </aside>
@@ -188,27 +276,34 @@ function App() {
           onClick={() => setSidebarOpen(true)}
           aria-label="Open settings"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="3" />
-            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M3 6h18M3 12h18M3 18h18" />
           </svg>
         </button>
 
         <header className="header">
           <h1>German Typing Practice</h1>
           <div className="controls">
-            <select
-              value={activePassage.id}
-              onChange={(e) => {
-                setActivePassage(passages.find((p) => p.id === e.target.value)!);
-              }}
-            >
-              {passages.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.title}
-                </option>
-              ))}
-            </select>
+            <div className="select-wrapper">
+              <select
+                className="passage-select"
+                value={activePassage.id}
+                onChange={(e) => {
+                  setActivePassage(passages.find((p) => p.id === e.target.value)!);
+                }}
+              >
+                {passages.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.title}
+                  </option>
+                ))}
+              </select>
+              <span className="select-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </span>
+            </div>
 
             <button onClick={reset} className="restart-btn">
               Restart

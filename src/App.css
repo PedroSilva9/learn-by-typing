@@ -251,22 +251,53 @@ body {
   flex-wrap: wrap;
 }
 
-select {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+.select-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 220px;
+}
+
+.passage-select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(15, 15, 20, 0.9), rgba(20, 20, 28, 0.98));
+  border: 1px solid rgba(228, 228, 231, 0.12);
   color: var(--text-primary);
-  padding: 0.7rem 1.2rem;
-  border-radius: 10px;
+  padding: 0.75rem 2.75rem 0.75rem 1.25rem;
+  border-radius: 12px;
   font-size: 0.95rem;
   font-family: inherit;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-select:hover, select:focus {
+.passage-select:hover,
+.passage-select:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 16px var(--accent-glow);
+  box-shadow: 0 0 24px var(--accent-glow);
   outline: none;
+}
+
+.passage-select option {
+  background: #0f0f16;
+  color: var(--text-primary);
+}
+
+.select-icon {
+  position: absolute;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.passage-select:focus + .select-icon {
+  color: var(--accent);
 }
 
 .restart-btn {
@@ -376,10 +407,34 @@ select:hover, select:focus {
   font-size: 1.3rem;
   line-height: 2.2;
   letter-spacing: 0.01em;
+  white-space: pre-wrap;
 }
 
 .translation {
   color: var(--text-secondary);
+}
+
+.word-token {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word-text {
+  display: inline-flex;
+}
+
+.word-gloss {
+  font-size: 0.65em;
+  color: var(--text-muted);
+  line-height: 1;
+  margin-top: 0;
+  text-align: center;
+  min-height: 1em;
+}
+
+.word-separator {
+  display: inline-block;
 }
 
 /* Character Styling */
@@ -412,13 +467,14 @@ select:hover, select:focus {
 .cursor {
   position: absolute;
   left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--cursor);
+  top: 15%;
+  bottom: 15%;
+  width: 100%;
+  background: color-mix(in srgb, var(--cursor) 75%, transparent);
   animation: blink 1s infinite;
-  border-radius: 1px;
-  box-shadow: 0 0 8px var(--accent-glow);
+  border-radius: 4px;
+  box-shadow: 0 0 12px var(--accent-glow);
+  z-index: -1;
 }
 
 @keyframes blink {
