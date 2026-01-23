@@ -4,18 +4,11 @@
 
 # Learn By Typing
 
-A small typing-first language learning app.
+A typing-first language learning app.
 
-I always had the idea that one of the best ways to learn a new language is to read a lot in that language and actively type it as well. When you type, you slow down just enough to notice spelling patterns, punctuation, and rhythm, and the repetition helps new words stick.
+I always had the idea that one of the best ways to learn a new language is to read a lot in that language and actively type it as well. When typing, you slow down just enough to notice spelling patterns, punctuation, and rhythm, and the repetition helps new words stick.
 
 For that reason, I created this project: a simple German typing practice app that shows a German passage alongside its English translation.
-
-## Features
-
-- Passage picker (German + English side-by-side)
-- Strict mode vs lenient mode
-- Live stats: WPM, accuracy, errors
-- Mobile-friendly settings sidebar
 
 ## Tech Stack
 
@@ -26,8 +19,8 @@ For that reason, I created this project: a simple German typing practice app tha
 
 Prerequisites:
 
-- Node.js (LTS recommended)
-- npm (comes with Node)
+- Node.js
+- npm
 
 Install dependencies:
 
