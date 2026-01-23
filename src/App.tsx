@@ -15,7 +15,6 @@ function App() {
   const [finished, setFinished] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const targetText = activePassage.de;
 
@@ -37,7 +36,6 @@ function App() {
   }, []);
 
   const handleContainerClick = (e: React.MouseEvent) => {
-    // Don't focus input if clicking on sidebar or its toggle
     const target = e.target as HTMLElement;
     if (target.closest('.sidebar') || target.closest('.sidebar-toggle')) {
       return;
@@ -48,19 +46,14 @@ function App() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (finished) return;
 
-    // Ignore modifier keys and special keys
     if (e.ctrlKey || e.altKey || e.metaKey) return;
 
-    // Handle backspace
     if (e.key === "Backspace") {
-      if (typed.length > 0) {
-        setTyped((prev) => prev.slice(0, -1));
-      }
+      setTyped((prev) => prev.slice(0, -1));
       e.preventDefault();
       return;
     }
 
-    // Ignore non-character keys
     if (e.key.length !== 1) return;
 
     e.preventDefault();
@@ -69,7 +62,6 @@ function App() {
     const expectedChar = targetText[currentIndex];
     const typedChar = e.key;
 
-    // Start timer on first keystroke
     if (startTime === null) {
       setStartTime(Date.now());
     }
@@ -80,14 +72,12 @@ function App() {
       const newTyped = typed + typedChar;
       setTyped(newTyped);
 
-      // Check if finished
       if (newTyped.length === targetText.length) {
         setFinished(true);
       }
     } else {
       setErrors((prev) => prev + 1);
       if (!strict) {
-        // In lenient mode, still advance but mark as error
         const newTyped = typed + typedChar;
         setTyped(newTyped);
 
@@ -95,17 +85,14 @@ function App() {
           setFinished(true);
         }
       }
-      // In strict mode, don't advance
     }
   };
 
-  // Calculate stats
   const correctChars = typed.split("").filter((char, i) => char === targetText[i]).length;
   const elapsedMinutes = startTime ? (Date.now() - startTime) / 1000 / 60 : 0;
   const wpm = elapsedMinutes > 0 ? Math.round((correctChars / 5) / elapsedMinutes) : 0;
   const accuracy = totalTyped > 0 ? Math.round((correctChars / totalTyped) * 100) : 100;
 
-  // Force re-render for live WPM updates
   const [, setTick] = useState(0);
   useEffect(() => {
     if (startTime && !finished) {
@@ -139,7 +126,6 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           <h2>Settings</h2>
@@ -192,13 +178,11 @@ function App() {
         </div>
       </aside>
 
-      {/* Sidebar overlay for mobile */}
       {sidebarOpen && (
         <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Main content */}
-      <div className="app" ref={containerRef} onClick={handleContainerClick}>
+      <div className="app" onClick={handleContainerClick}>
         <button
           className="sidebar-toggle"
           onClick={() => setSidebarOpen(true)}
@@ -216,8 +200,7 @@ function App() {
             <select
               value={activePassage.id}
               onChange={(e) => {
-                const passage = passages.find((p) => p.id === e.target.value);
-                if (passage) setActivePassage(passage);
+                setActivePassage(passages.find((p) => p.id === e.target.value)!);
               }}
             >
               {passages.map((p) => (
