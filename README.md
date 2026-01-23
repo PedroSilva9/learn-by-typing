@@ -2,7 +2,7 @@
 
 A small typing-first language learning app.
 
-I always had the idea that one of the best ways to learn a new language is to read a lot in that language and actively *type* it as well. When you type, you slow down just enough to notice spelling patterns, punctuation, and rhythm, and the repetition helps new words stick.
+I always had the idea that one of the best ways to learn a new language is to read a lot in that language and actively type it as well. When you type, you slow down just enough to notice spelling patterns, punctuation, and rhythm, and the repetition helps new words stick.
 
 For that reason, I created this project: a simple German typing practice app that shows a German passage alongside its English translation.
 
