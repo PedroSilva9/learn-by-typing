@@ -1,3 +1,5 @@
+![Learn By Typing logo](./logo.png)
+
 # Learn By Typing
 
 A small typing-first language learning app.
