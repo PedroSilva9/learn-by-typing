@@ -1,172 +1,182 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { passages } from "./data/passages";
-import type { Passage } from "./data/passages";
-import "./App.css";
+import { useCallback, useEffect, useRef, useState } from 'react'
+import type { Passage } from './data/passages'
+import { passages } from './data/passages'
+import './App.css'
 
 function App() {
-  const [activePassage, setActivePassage] = useState<Passage>(passages[0]);
-  const [typed, setTyped] = useState<string>("");
-  const [strict, setStrict] = useState<boolean>(true);
-  const [showStats, setShowStats] = useState<boolean>(true);
-  const [showWordGloss, setShowWordGloss] = useState<boolean>(false);
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-  const [startTime, setStartTime] = useState<number | null>(null);
-  const [errors, setErrors] = useState<number>(0);
-  const [totalTyped, setTotalTyped] = useState<number>(0);
-  const [finished, setFinished] = useState<boolean>(false);
+  const [activePassage, setActivePassage] = useState<Passage>(passages[0])
+  const [typed, setTyped] = useState<string>('')
+  const [strict, setStrict] = useState<boolean>(true)
+  const [showStats, setShowStats] = useState<boolean>(true)
+  const [showWordGloss, setShowWordGloss] = useState<boolean>(false)
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
+  const [startTime, setStartTime] = useState<number | null>(null)
+  const [errors, setErrors] = useState<number>(0)
+  const [totalTyped, setTotalTyped] = useState<number>(0)
+  const [finished, setFinished] = useState<boolean>(false)
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const targetText = activePassage.de;
+  const targetText = activePassage.de
 
   const reset = useCallback(() => {
-    setTyped("");
-    setStartTime(null);
-    setErrors(0);
-    setTotalTyped(0);
-    setFinished(false);
-    inputRef.current?.focus();
-  }, []);
+    setTyped('')
+    setStartTime(null)
+    setErrors(0)
+    setTotalTyped(0)
+    setFinished(false)
+    inputRef.current?.focus()
+  }, [])
 
   useEffect(() => {
-    reset();
-  }, [activePassage, reset]);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const handleContainerClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (
-      target.closest('.sidebar') ||
-      target.closest('.sidebar-toggle') ||
-      target.closest('button, select, input, label, option')
-    ) {
-      return;
+    if (activePassage) {
+      reset()
     }
-    inputRef.current?.focus();
-  };
+  }, [activePassage, reset])
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
+
+  useEffect(() => {
+    const handlePointerDown = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null
+      if (!target) return
+      if (
+        target.closest('.sidebar') ||
+        target.closest('.sidebar-toggle') ||
+        target.closest('button, select, input, label, option')
+      ) {
+        return
+      }
+      inputRef.current?.focus()
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown)
+    return () => document.removeEventListener('pointerdown', handlePointerDown)
+  }, [])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (finished) return;
+    if (finished) return
 
-    if (e.ctrlKey || e.altKey || e.metaKey) return;
+    if (e.ctrlKey || e.altKey || e.metaKey) return
 
-    if (e.key === "Backspace") {
-      setTyped((prev) => prev.slice(0, -1));
-      e.preventDefault();
-      return;
+    if (e.key === 'Backspace') {
+      setTyped((prev) => prev.slice(0, -1))
+      e.preventDefault()
+      return
     }
 
-    if (e.key.length !== 1) return;
+    if (e.key.length !== 1) return
 
-    e.preventDefault();
+    e.preventDefault()
 
-    const currentIndex = typed.length;
-    const expectedChar = targetText[currentIndex];
-    const typedChar = e.key;
+    const currentIndex = typed.length
+    const expectedChar = targetText[currentIndex]
+    const typedChar = e.key
 
     if (startTime === null) {
-      setStartTime(Date.now());
+      setStartTime(Date.now())
     }
 
-    setTotalTyped((prev) => prev + 1);
+    setTotalTyped((prev) => prev + 1)
 
     if (typedChar === expectedChar) {
-      const newTyped = typed + typedChar;
-      setTyped(newTyped);
+      const newTyped = typed + typedChar
+      setTyped(newTyped)
 
       if (newTyped.length === targetText.length) {
-        setFinished(true);
+        setFinished(true)
       }
     } else {
-      setErrors((prev) => prev + 1);
+      setErrors((prev) => prev + 1)
       if (!strict) {
-        const newTyped = typed + typedChar;
-        setTyped(newTyped);
+        const newTyped = typed + typedChar
+        setTyped(newTyped)
 
         if (newTyped.length === targetText.length) {
-          setFinished(true);
+          setFinished(true)
         }
       }
     }
-  };
+  }
 
-  const correctChars = typed.split("").filter((char, i) => char === targetText[i]).length;
-  const elapsedMinutes = startTime ? (Date.now() - startTime) / 1000 / 60 : 0;
-  const wpm = elapsedMinutes > 0 ? Math.round((correctChars / 5) / elapsedMinutes) : 0;
-  const accuracy = totalTyped > 0 ? Math.round((correctChars / totalTyped) * 100) : 100;
+  const correctChars = typed.split('').filter((char, i) => char === targetText[i]).length
+  const elapsedMinutes = startTime ? (Date.now() - startTime) / 1000 / 60 : 0
+  const wpm = elapsedMinutes > 0 ? Math.round(correctChars / 5 / elapsedMinutes) : 0
+  const accuracy = totalTyped > 0 ? Math.round((correctChars / totalTyped) * 100) : 100
 
-  const [, setTick] = useState(0);
+  const [, setTick] = useState(0)
   useEffect(() => {
     if (startTime && !finished) {
-      const interval = setInterval(() => setTick((t) => t + 1), 500);
-      return () => clearInterval(interval);
+      const interval = setInterval(() => setTick((t) => t + 1), 500)
+      return () => clearInterval(interval)
     }
-  }, [startTime, finished]);
+  }, [startTime, finished])
 
   const renderText = () => {
     const tokens: Array<
       | {
-          type: "word";
-          text: string;
-          startIndex: number;
-          wordIndex: number;
+          type: 'word'
+          text: string
+          startIndex: number
+          wordIndex: number
         }
       | {
-          type: "sep";
-          text: string;
-          startIndex: number;
+          type: 'sep'
+          text: string
+          startIndex: number
         }
-    > = [];
+    > = []
 
-    const wordRegex = /[A-Za-zÄÖÜäöüß]+/g;
-    let match: RegExpExecArray | null;
-    let cursor = 0;
-    let wordIndex = 0;
+    const wordRegex = /[A-Za-zÄÖÜäöüß]+/g
+    let match: RegExpExecArray | null
+    let cursor = 0
+    let wordIndex = 0
 
-    while ((match = wordRegex.exec(targetText)) !== null) {
+    match = wordRegex.exec(targetText)
+    while (match !== null) {
       if (match.index > cursor) {
         tokens.push({
-          type: "sep",
+          type: 'sep',
           text: targetText.slice(cursor, match.index),
           startIndex: cursor,
-        });
+        })
       }
 
       tokens.push({
-        type: "word",
+        type: 'word',
         text: match[0],
         startIndex: match.index,
         wordIndex,
-      });
+      })
 
-      cursor = match.index + match[0].length;
-      wordIndex += 1;
+      cursor = match.index + match[0].length
+      wordIndex += 1
+      match = wordRegex.exec(targetText)
     }
 
     if (cursor < targetText.length) {
       tokens.push({
-        type: "sep",
+        type: 'sep',
         text: targetText.slice(cursor),
         startIndex: cursor,
-      });
+      })
     }
 
     const renderChars = (text: string, startIndex: number) => {
-      return text.split("").map((char, offset) => {
-        const index = startIndex + offset;
-        let className = "char pending";
+      return text.split('').map((char, offset) => {
+        const index = startIndex + offset
+        let className = 'char pending'
 
         if (index < typed.length) {
           if (typed[index] === char) {
-            className = "char correct";
+            className = 'char correct'
           } else {
-            className = "char incorrect";
+            className = 'char incorrect'
           }
         } else if (index === typed.length) {
-          className = "char current";
+          className = 'char current'
         }
 
         return (
@@ -174,41 +184,51 @@ function App() {
             {char}
             {index === typed.length && <span className="cursor" />}
           </span>
-        );
-      });
-    };
+        )
+      })
+    }
 
-    return tokens.map((token, index) => {
-      if (token.type === "sep") {
+    return tokens.map((token) => {
+      if (token.type === 'sep') {
         return (
-          <span key={`sep-${index}`} className="word-separator">
+          <span key={`sep-${token.startIndex}`} className="word-separator">
             {renderChars(token.text, token.startIndex)}
           </span>
-        );
+        )
       }
 
-      const gloss = activePassage.gloss[token.wordIndex] ?? "";
+      const gloss = activePassage.gloss[token.wordIndex] ?? ''
 
       return (
-        <span key={`word-${index}`} className="word-token">
+        <span key={`word-${token.startIndex}`} className="word-token">
           <span className="word-text">{renderChars(token.text, token.startIndex)}</span>
           {showWordGloss && <span className="word-gloss">{gloss}</span>}
         </span>
-      );
-    });
-  };
+      )
+    })
+  }
 
   return (
     <div className="app-container">
-      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <h2>Settings</h2>
           <button
+            type="button"
             className="sidebar-close"
             onClick={() => setSidebarOpen(false)}
             aria-label="Close sidebar"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+              focusable="false"
+            >
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           </button>
@@ -227,8 +247,8 @@ function App() {
             </label>
             <p className="setting-description">
               {strict
-                ? "You must type the correct character to proceed."
-                : "Mistakes are recorded but you can continue."}
+                ? 'You must type the correct character to proceed.'
+                : 'Mistakes are recorded but you can continue.'}
             </p>
           </div>
 
@@ -245,8 +265,8 @@ function App() {
             </label>
             <p className="setting-description">
               {showStats
-                ? "WPM, accuracy, and errors are visible."
-                : "Statistics are hidden for distraction-free typing."}
+                ? 'WPM, accuracy, and errors are visible.'
+                : 'Statistics are hidden for distraction-free typing.'}
             </p>
             <label className="setting-toggle">
               <input
@@ -259,24 +279,40 @@ function App() {
             </label>
             <p className="setting-description">
               {showWordGloss
-                ? "Single-word translations are visible under each word."
-                : "Single-word translations are hidden."}
+                ? 'Single-word translations are visible under each word.'
+                : 'Single-word translations are hidden.'}
             </p>
           </div>
         </div>
       </aside>
 
       {sidebarOpen && (
-        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+        <button
+          type="button"
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+          aria-label="Close settings"
+        />
       )}
 
-      <div className="app" onClick={handleContainerClick}>
+      <div className="app">
         <button
+          type="button"
           className="sidebar-toggle"
           onClick={() => setSidebarOpen(true)}
           aria-label="Open settings"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            aria-hidden="true"
+            focusable="false"
+          >
             <path d="M3 6h18M3 12h18M3 18h18" />
           </svg>
         </button>
@@ -289,7 +325,10 @@ function App() {
                 className="passage-select"
                 value={activePassage.id}
                 onChange={(e) => {
-                  setActivePassage(passages.find((p) => p.id === e.target.value)!);
+                  const selected = passages.find((p) => p.id === e.target.value)
+                  if (selected) {
+                    setActivePassage(selected)
+                  }
                 }}
               >
                 {passages.map((p) => (
@@ -299,13 +338,22 @@ function App() {
                 ))}
               </select>
               <span className="select-icon" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                  focusable="false"
+                >
                   <path d="M6 9l6 6 6-6" />
                 </svg>
               </span>
             </div>
 
-            <button onClick={reset} className="restart-btn">
+            <button type="button" onClick={reset} className="restart-btn">
               Restart
             </button>
           </div>
@@ -328,11 +376,7 @@ function App() {
           </div>
         )}
 
-        {finished && (
-          <div className="finished-banner">
-            Finished! Press Restart to try again.
-          </div>
-        )}
+        {finished && <div className="finished-banner">Finished! Press Restart to try again.</div>}
 
         <main className="main">
           <div className="column german-column">
@@ -361,7 +405,7 @@ function App() {
         </footer>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
