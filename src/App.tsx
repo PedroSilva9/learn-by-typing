@@ -7,10 +7,22 @@ import type { Passage } from './data/passages'
 import { passages } from './data/passages'
 import './App.css'
 
+const STRICT_MODE_STORAGE_KEY = 'learn-by-typing-strict-mode'
+
+function getInitialStrictMode(): boolean {
+  if (typeof window === 'undefined') return true
+
+  const stored = localStorage.getItem(STRICT_MODE_STORAGE_KEY)
+  if (stored === 'true') return true
+  if (stored === 'false') return false
+
+  return true
+}
+
 function App() {
   const [activePassage, setActivePassage] = useState<Passage>(passages[0])
   const [typed, setTyped] = useState<string>('')
-  const [strict, setStrict] = useState<boolean>(true)
+  const [strict, setStrict] = useState<boolean>(getInitialStrictMode)
   const [showWordGloss, setShowWordGloss] = useState<boolean>(false)
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
   const [finished, setFinished] = useState<boolean>(false)
@@ -23,6 +35,10 @@ function App() {
   // Keep strictRef in sync with strict state
   useEffect(() => {
     strictRef.current = strict
+  }, [strict])
+
+  useEffect(() => {
+    localStorage.setItem(STRICT_MODE_STORAGE_KEY, String(strict))
   }, [strict])
 
   const targetText = activePassage.de
