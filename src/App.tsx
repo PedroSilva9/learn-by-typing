@@ -16,6 +16,13 @@ function App() {
   const [finished, setFinished] = useState<boolean>(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
+  const isComposingRef = useRef<boolean>(false)
+  const strictRef = useRef<boolean>(strict)
+
+  // Keep strictRef in sync with strict state
+  useEffect(() => {
+    strictRef.current = strict
+  }, [strict])
 
   const targetText = activePassage.de
 
@@ -39,10 +46,15 @@ function App() {
     const handlePointerDown = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null
       if (!target) return
+      // Don't focus if clicking inside the sidebar or on the toggle button
+      // But DO focus when clicking the overlay (it closes the sidebar)
+      if (target.closest('.sidebar') || target.closest('.sidebar-toggle')) {
+        return
+      }
+      // Don't focus if clicking on interactive elements, except the overlay
       if (
-        target.closest('.sidebar') ||
-        target.closest('.sidebar-toggle') ||
-        target.closest('button, select, input, label, option')
+        target.closest('button, select, input, label, option') &&
+        !target.closest('.sidebar-overlay')
       ) {
         return
       }
@@ -53,8 +65,16 @@ function App() {
     return () => document.removeEventListener('pointerdown', handlePointerDown)
   }, [])
 
+  // Focus input when sidebar closes
+  useEffect(() => {
+    if (!sidebarOpen) {
+      inputRef.current?.focus()
+    }
+  }, [sidebarOpen])
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (finished) return
+    if (isComposingRef.current) return
 
     if (e.ctrlKey || e.altKey || e.metaKey) return
 
@@ -63,32 +83,68 @@ function App() {
       e.preventDefault()
       return
     }
+  }
 
-    if (e.key.length !== 1) return
+  const handleCompositionStart = () => {
+    isComposingRef.current = true
+  }
 
-    e.preventDefault()
+  const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+    isComposingRef.current = false
+    // Process the composed data
+    const data = e.data
+    if (data && !finished) {
+      processInput(data)
+    }
+    // Clear the input value
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
+  }
 
-    const currentIndex = typed.length
-    const expectedChar = targetText[currentIndex]
-    const typedChar = e.key
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    if (finished) return
+    if (isComposingRef.current) return
 
-    if (typedChar === expectedChar) {
-      const newTyped = typed + typedChar
-      setTyped(newTyped)
+    const input = e.currentTarget
+    const value = input.value
+
+    if (value) {
+      processInput(value)
+      // Clear the input after processing
+      input.value = ''
+    }
+  }
+
+  const processInput = (data: string) => {
+    if (finished) return
+
+    setTyped((prev) => {
+      let newTyped = prev
+
+      // Process each character in the input data
+      for (const char of data) {
+        const currentIndex = newTyped.length
+        if (currentIndex >= targetText.length) {
+          break
+        }
+
+        const expectedChar = targetText[currentIndex]
+
+        if (char === expectedChar) {
+          newTyped = newTyped + char
+        } else if (!strictRef.current) {
+          newTyped = newTyped + char
+        }
+        // In strict mode with wrong char, do nothing (char is rejected)
+      }
 
       if (newTyped.length === targetText.length) {
         setFinished(true)
       }
-    } else {
-      if (!strict) {
-        const newTyped = typed + typedChar
-        setTyped(newTyped)
 
-        if (newTyped.length === targetText.length) {
-          setFinished(true)
-        }
-      }
-    }
+      return newTyped
+    })
   }
 
   const renderText = () => {
@@ -258,6 +314,7 @@ function App() {
         <button
           type="button"
           className="sidebar-overlay"
+          onMouseDown={(e) => e.preventDefault()}
           onClick={() => setSidebarOpen(false)}
           aria-label="Close settings"
         />
@@ -318,6 +375,9 @@ function App() {
           type="text"
           className="hidden-input"
           onKeyDown={handleKeyDown}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
+          onInput={handleInput}
           autoComplete="off"
           autoCapitalize="off"
           autoCorrect="off"
