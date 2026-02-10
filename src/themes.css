@@ -1,0 +1,429 @@
+/* Theme Definitions */
+
+/* Each theme defines the same CSS custom properties */
+
+/* ============================================
+   DEFAULT / FALLBACK (Tokyo Night)
+   ============================================ */
+
+:root {
+  --bg-gradient-start: #0a0a0f;
+  --bg-gradient-end: #16161f;
+  --card-bg: rgb(255 255 255 / 2%);
+  --card-border: rgb(255 255 255 / 6%);
+  --sidebar-bg: rgb(20 20 28 / 98%);
+  --text-primary: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent: #8b5cf6;
+  --accent-hover: #a78bfa;
+  --accent-glow: rgb(139 92 246 / 30%);
+  --correct: #10b981;
+  --incorrect: #f43f5e;
+  --pending: #52525b;
+  --cursor: #8b5cf6;
+}
+
+/* ============================================
+   DARK THEMES
+   ============================================ */
+
+/* Tokyo Night (Default) - Current theme */
+:root[data-theme="tokyo-night"] {
+  --bg-gradient-start: #0a0a0f;
+  --bg-gradient-end: #16161f;
+  --card-bg: rgb(255 255 255 / 2%);
+  --card-border: rgb(255 255 255 / 6%);
+  --sidebar-bg: rgb(20 20 28 / 98%);
+  --text-primary: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent: #8b5cf6;
+  --accent-hover: #a78bfa;
+  --accent-glow: rgb(139 92 246 / 30%);
+  --correct: #10b981;
+  --incorrect: #f43f5e;
+  --pending: #52525b;
+  --cursor: #8b5cf6;
+}
+
+/* Dracula */
+:root[data-theme="dracula"] {
+  --bg-gradient-start: #1e1f29;
+  --bg-gradient-end: #282a36;
+  --card-bg: rgb(68 71 90 / 30%);
+  --card-border: rgb(98 114 164 / 30%);
+  --sidebar-bg: rgb(40 42 54 / 98%);
+  --text-primary: #f8f8f2;
+  --text-secondary: #bfbfbf;
+  --text-muted: #6272a4;
+  --accent: #bd93f9;
+  --accent-hover: #caa9fa;
+  --accent-glow: rgb(189 147 249 / 30%);
+  --correct: #50fa7b;
+  --incorrect: #f55;
+  --pending: #6272a4;
+  --cursor: #ff79c6;
+}
+
+/* One Dark Pro */
+:root[data-theme="one-dark"] {
+  --bg-gradient-start: #1e2127;
+  --bg-gradient-end: #282c34;
+  --card-bg: rgb(255 255 255 / 3%);
+  --card-border: rgb(255 255 255 / 8%);
+  --sidebar-bg: rgb(33 37 43 / 98%);
+  --text-primary: #abb2bf;
+  --text-secondary: #9299a8;
+  --text-muted: #5c6370;
+  --accent: #61afef;
+  --accent-hover: #7cc3f7;
+  --accent-glow: rgb(97 175 239 / 30%);
+  --correct: #98c379;
+  --incorrect: #e06c75;
+  --pending: #5c6370;
+  --cursor: #528bff;
+}
+
+/* Nord */
+:root[data-theme="nord"] {
+  --bg-gradient-start: #242933;
+  --bg-gradient-end: #2e3440;
+  --card-bg: rgb(59 66 82 / 50%);
+  --card-border: rgb(67 76 94 / 60%);
+  --sidebar-bg: rgb(46 52 64 / 98%);
+  --text-primary: #eceff4;
+  --text-secondary: #d8dee9;
+  --text-muted: #7b88a1;
+  --accent: #88c0d0;
+  --accent-hover: #8fbcbb;
+  --accent-glow: rgb(136 192 208 / 30%);
+  --correct: #a3be8c;
+  --incorrect: #bf616a;
+  --pending: #616e88;
+  --cursor: #81a1c1;
+}
+
+/* Catppuccin Mocha */
+:root[data-theme="catppuccin-mocha"] {
+  --bg-gradient-start: #181825;
+  --bg-gradient-end: #1e1e2e;
+  --card-bg: rgb(49 50 68 / 40%);
+  --card-border: rgb(69 71 90 / 50%);
+  --sidebar-bg: rgb(30 30 46 / 98%);
+  --text-primary: #cdd6f4;
+  --text-secondary: #bac2de;
+  --text-muted: #6c7086;
+  --accent: #cba6f7;
+  --accent-hover: #d4b8fa;
+  --accent-glow: rgb(203 166 247 / 30%);
+  --correct: #a6e3a1;
+  --incorrect: #f38ba8;
+  --pending: #585b70;
+  --cursor: #f5c2e7;
+}
+
+/* Gruvbox Dark */
+:root[data-theme="gruvbox-dark"] {
+  --bg-gradient-start: #1d2021;
+  --bg-gradient-end: #282828;
+  --card-bg: rgb(60 56 54 / 50%);
+  --card-border: rgb(80 73 69 / 60%);
+  --sidebar-bg: rgb(40 40 40 / 98%);
+  --text-primary: #ebdbb2;
+  --text-secondary: #d5c4a1;
+  --text-muted: #928374;
+  --accent: #fe8019;
+  --accent-hover: #fabd2f;
+  --accent-glow: rgb(254 128 25 / 30%);
+  --correct: #b8bb26;
+  --incorrect: #fb4934;
+  --pending: #7c6f64;
+  --cursor: #fabd2f;
+}
+
+/* Monokai */
+:root[data-theme="monokai"] {
+  --bg-gradient-start: #1e1f1c;
+  --bg-gradient-end: #272822;
+  --card-bg: rgb(255 255 255 / 3%);
+  --card-border: rgb(255 255 255 / 8%);
+  --sidebar-bg: rgb(39 40 34 / 98%);
+  --text-primary: #f8f8f2;
+  --text-secondary: #cfcfc2;
+  --text-muted: #75715e;
+  --accent: #a6e22e;
+  --accent-hover: #b6f23e;
+  --accent-glow: rgb(166 226 46 / 30%);
+  --correct: #a6e22e;
+  --incorrect: #f92672;
+  --pending: #75715e;
+  --cursor: #f92672;
+}
+
+/* ============================================
+   LIGHT THEMES
+   ============================================ */
+
+/* Catppuccin Latte */
+:root[data-theme="catppuccin-latte"] {
+  --bg-gradient-start: #e6e9ef;
+  --bg-gradient-end: #eff1f5;
+  --card-bg: rgb(220 224 232 / 50%);
+  --card-border: rgb(172 176 190 / 40%);
+  --sidebar-bg: rgb(239 241 245 / 98%);
+  --text-primary: #4c4f69;
+  --text-secondary: #5c5f77;
+  --text-muted: #8c8fa1;
+  --accent: #8839ef;
+  --accent-hover: #9d4edd;
+  --accent-glow: rgb(136 57 239 / 20%);
+  --correct: #40a02b;
+  --incorrect: #d20f39;
+  --pending: #acb0be;
+  --cursor: #ea76cb;
+}
+
+/* Gruvbox Light */
+:root[data-theme="gruvbox-light"] {
+  --bg-gradient-start: #f2e5bc;
+  --bg-gradient-end: #fbf1c7;
+  --card-bg: rgb(213 196 161 / 40%);
+  --card-border: rgb(189 174 147 / 50%);
+  --sidebar-bg: rgb(251 241 199 / 98%);
+  --text-primary: #3c3836;
+  --text-secondary: #504945;
+  --text-muted: #7c6f64;
+  --accent: #d65d0e;
+  --accent-hover: #af3a03;
+  --accent-glow: rgb(214 93 14 / 20%);
+  --correct: #79740e;
+  --incorrect: #cc241d;
+  --pending: #a89984;
+  --cursor: #b57614;
+}
+
+/* Sepia / Paper */
+:root[data-theme="sepia"] {
+  --bg-gradient-start: #f4ecd8;
+  --bg-gradient-end: #faf8f0;
+  --card-bg: rgb(215 200 170 / 30%);
+  --card-border: rgb(180 160 130 / 30%);
+  --sidebar-bg: rgb(250 248 240 / 98%);
+  --text-primary: #433422;
+  --text-secondary: #5c4a34;
+  --text-muted: #8b7355;
+  --accent: #8b4513;
+  --accent-hover: #a0522d;
+  --accent-glow: rgb(139 69 19 / 20%);
+  --correct: #2d5016;
+  --incorrect: #a52a2a;
+  --pending: #b0a090;
+  --cursor: #cd853f;
+}
+
+/* ============================================
+   DROPDOWN COMPONENT STYLES
+   ============================================ */
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dropdown-trigger:hover,
+.dropdown-trigger:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.dropdown-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-value-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.dropdown-chevron {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+
+.dropdown-chevron.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  left: 0;
+  z-index: 200;
+  max-height: 320px;
+  padding: 0.5rem;
+  overflow-y: auto;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--sidebar-bg);
+  box-shadow: 0 10px 40px rgb(0 0 0 / 30%);
+}
+
+.dropdown-group {
+  padding: 0.25rem 0;
+}
+
+.dropdown-group-label {
+  padding: 0.5rem 0.75rem 0.4rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background: var(--card-bg);
+}
+
+.dropdown-item.selected {
+  background: var(--accent-glow);
+  color: var(--text-primary);
+}
+
+.dropdown-item-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.dropdown-item-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-check {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 0.4rem 0.5rem;
+  background: var(--card-border);
+}
+
+/* ============================================
+   THEME DROPDOWN SPECIFIC STYLES
+   ============================================ */
+
+.theme-dropdown {
+  width: 100%;
+}
+
+/* Theme color preview dots */
+.theme-color-dot {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--card-border);
+  border-radius: 50%;
+}
+
+/* Preview colors for each theme */
+.theme-color-dot[data-theme-preview="tokyo-night"] {
+  background: linear-gradient(135deg, #8b5cf6 50%, #0a0a0f 50%);
+}
+
+.theme-color-dot[data-theme-preview="dracula"] {
+  background: linear-gradient(135deg, #bd93f9 50%, #282a36 50%);
+}
+
+.theme-color-dot[data-theme-preview="one-dark"] {
+  background: linear-gradient(135deg, #61afef 50%, #282c34 50%);
+}
+
+.theme-color-dot[data-theme-preview="nord"] {
+  background: linear-gradient(135deg, #88c0d0 50%, #2e3440 50%);
+}
+
+.theme-color-dot[data-theme-preview="catppuccin-mocha"] {
+  background: linear-gradient(135deg, #cba6f7 50%, #1e1e2e 50%);
+}
+
+.theme-color-dot[data-theme-preview="gruvbox-dark"] {
+  background: linear-gradient(135deg, #fe8019 50%, #282828 50%);
+}
+
+.theme-color-dot[data-theme-preview="monokai"] {
+  background: linear-gradient(135deg, #a6e22e 50%, #272822 50%);
+}
+
+.theme-color-dot[data-theme-preview="catppuccin-latte"] {
+  background: linear-gradient(135deg, #8839ef 50%, #eff1f5 50%);
+}
+
+.theme-color-dot[data-theme-preview="gruvbox-light"] {
+  background: linear-gradient(135deg, #d65d0e 50%, #fbf1c7 50%);
+}
+
+.theme-color-dot[data-theme-preview="sepia"] {
+  background: linear-gradient(135deg, #8b4513 50%, #faf8f0 50%);
+}
+
+/* ============================================
+   PASSAGE DROPDOWN SPECIFIC STYLES
+   ============================================ */
+
+.passage-dropdown {
+  min-width: 220px;
+}
+
+.passage-dropdown .dropdown-trigger {
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+}
