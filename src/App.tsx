@@ -1,3 +1,5 @@
+import { faRotateRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { PassageSelector } from './components/PassageSelector'
 import { ThemeSelector } from './components/ThemeSelector'
@@ -9,12 +11,8 @@ function App() {
   const [activePassage, setActivePassage] = useState<Passage>(passages[0])
   const [typed, setTyped] = useState<string>('')
   const [strict, setStrict] = useState<boolean>(true)
-  const [showStats, setShowStats] = useState<boolean>(true)
   const [showWordGloss, setShowWordGloss] = useState<boolean>(false)
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
-  const [startTime, setStartTime] = useState<number | null>(null)
-  const [errors, setErrors] = useState<number>(0)
-  const [totalTyped, setTotalTyped] = useState<number>(0)
   const [finished, setFinished] = useState<boolean>(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -23,9 +21,6 @@ function App() {
 
   const reset = useCallback(() => {
     setTyped('')
-    setStartTime(null)
-    setErrors(0)
-    setTotalTyped(0)
     setFinished(false)
     inputRef.current?.focus()
   }, [])
@@ -77,12 +72,6 @@ function App() {
     const expectedChar = targetText[currentIndex]
     const typedChar = e.key
 
-    if (startTime === null) {
-      setStartTime(Date.now())
-    }
-
-    setTotalTyped((prev) => prev + 1)
-
     if (typedChar === expectedChar) {
       const newTyped = typed + typedChar
       setTyped(newTyped)
@@ -91,7 +80,6 @@ function App() {
         setFinished(true)
       }
     } else {
-      setErrors((prev) => prev + 1)
       if (!strict) {
         const newTyped = typed + typedChar
         setTyped(newTyped)
@@ -102,19 +90,6 @@ function App() {
       }
     }
   }
-
-  const correctChars = typed.split('').filter((char, i) => char === targetText[i]).length
-  const elapsedMinutes = startTime ? (Date.now() - startTime) / 1000 / 60 : 0
-  const wpm = elapsedMinutes > 0 ? Math.round(correctChars / 5 / elapsedMinutes) : 0
-  const accuracy = totalTyped > 0 ? Math.round((correctChars / totalTyped) * 100) : 100
-
-  const [, setTick] = useState(0)
-  useEffect(() => {
-    if (startTime && !finished) {
-      const interval = setInterval(() => setTick((t) => t + 1), 500)
-      return () => clearInterval(interval)
-    }
-  }, [startTime, finished])
 
   const renderText = () => {
     const tokens: Array<
@@ -259,20 +234,6 @@ function App() {
             <label className="setting-toggle">
               <input
                 type="checkbox"
-                checked={showStats}
-                onChange={(e) => setShowStats(e.target.checked)}
-              />
-              <span className="toggle-switch"></span>
-              <span className="setting-label">Show Statistics</span>
-            </label>
-            <p className="setting-description">
-              {showStats
-                ? 'WPM, accuracy, and errors are visible.'
-                : 'Statistics are hidden for distraction-free typing.'}
-            </p>
-            <label className="setting-toggle">
-              <input
-                type="checkbox"
                 checked={showWordGloss}
                 onChange={(e) => setShowWordGloss(e.target.checked)}
               />
@@ -325,7 +286,7 @@ function App() {
         </button>
 
         <header className="header">
-          <h1>German Typing Practice</h1>
+          <h1>Learn by Typing</h1>
           <div className="controls">
             <PassageSelector
               passages={passages}
@@ -333,28 +294,11 @@ function App() {
               onSelect={setActivePassage}
             />
 
-            <button type="button" onClick={reset} className="restart-btn">
-              Restart
+            <button type="button" onClick={reset} className="restart-btn" aria-label="Restart">
+              <FontAwesomeIcon icon={faRotateRight} />
             </button>
           </div>
         </header>
-
-        {showStats && (
-          <div className="stats">
-            <div className="stat">
-              <span className="stat-value">{wpm}</span>
-              <span className="stat-label">WPM</span>
-            </div>
-            <div className="stat">
-              <span className="stat-value">{accuracy}%</span>
-              <span className="stat-label">Accuracy</span>
-            </div>
-            <div className="stat">
-              <span className="stat-value">{errors}</span>
-              <span className="stat-label">Errors</span>
-            </div>
-          </div>
-        )}
 
         {finished && <div className="finished-banner">Finished! Press Restart to try again.</div>}
 

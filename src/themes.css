@@ -1,4 +1,5 @@
 /* Theme Definitions */
+
 /* Each theme defines the same CSS custom properties */
 
 /* ============================================
@@ -8,15 +9,15 @@
 :root {
   --bg-gradient-start: #0a0a0f;
   --bg-gradient-end: #16161f;
-  --card-bg: rgba(255, 255, 255, 0.02);
-  --card-border: rgba(255, 255, 255, 0.06);
-  --sidebar-bg: rgba(20, 20, 28, 0.98);
+  --card-bg: rgb(255 255 255 / 2%);
+  --card-border: rgb(255 255 255 / 6%);
+  --sidebar-bg: rgb(20 20 28 / 98%);
   --text-primary: #e4e4e7;
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
   --accent: #8b5cf6;
   --accent-hover: #a78bfa;
-  --accent-glow: rgba(139, 92, 246, 0.3);
+  --accent-glow: rgb(139 92 246 / 30%);
   --correct: #10b981;
   --incorrect: #f43f5e;
   --pending: #52525b;
@@ -31,15 +32,15 @@
 :root[data-theme="tokyo-night"] {
   --bg-gradient-start: #0a0a0f;
   --bg-gradient-end: #16161f;
-  --card-bg: rgba(255, 255, 255, 0.02);
-  --card-border: rgba(255, 255, 255, 0.06);
-  --sidebar-bg: rgba(20, 20, 28, 0.98);
+  --card-bg: rgb(255 255 255 / 2%);
+  --card-border: rgb(255 255 255 / 6%);
+  --sidebar-bg: rgb(20 20 28 / 98%);
   --text-primary: #e4e4e7;
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
   --accent: #8b5cf6;
   --accent-hover: #a78bfa;
-  --accent-glow: rgba(139, 92, 246, 0.3);
+  --accent-glow: rgb(139 92 246 / 30%);
   --correct: #10b981;
   --incorrect: #f43f5e;
   --pending: #52525b;
@@ -50,17 +51,17 @@
 :root[data-theme="dracula"] {
   --bg-gradient-start: #1e1f29;
   --bg-gradient-end: #282a36;
-  --card-bg: rgba(68, 71, 90, 0.3);
-  --card-border: rgba(98, 114, 164, 0.3);
-  --sidebar-bg: rgba(40, 42, 54, 0.98);
+  --card-bg: rgb(68 71 90 / 30%);
+  --card-border: rgb(98 114 164 / 30%);
+  --sidebar-bg: rgb(40 42 54 / 98%);
   --text-primary: #f8f8f2;
   --text-secondary: #bfbfbf;
   --text-muted: #6272a4;
   --accent: #bd93f9;
   --accent-hover: #caa9fa;
-  --accent-glow: rgba(189, 147, 249, 0.3);
+  --accent-glow: rgb(189 147 249 / 30%);
   --correct: #50fa7b;
-  --incorrect: #ff5555;
+  --incorrect: #f55;
   --pending: #6272a4;
   --cursor: #ff79c6;
 }
@@ -69,15 +70,15 @@
 :root[data-theme="one-dark"] {
   --bg-gradient-start: #1e2127;
   --bg-gradient-end: #282c34;
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --sidebar-bg: rgba(33, 37, 43, 0.98);
+  --card-bg: rgb(255 255 255 / 3%);
+  --card-border: rgb(255 255 255 / 8%);
+  --sidebar-bg: rgb(33 37 43 / 98%);
   --text-primary: #abb2bf;
   --text-secondary: #9299a8;
   --text-muted: #5c6370;
   --accent: #61afef;
   --accent-hover: #7cc3f7;
-  --accent-glow: rgba(97, 175, 239, 0.3);
+  --accent-glow: rgb(97 175 239 / 30%);
   --correct: #98c379;
   --incorrect: #e06c75;
   --pending: #5c6370;
@@ -88,15 +89,15 @@
 :root[data-theme="nord"] {
   --bg-gradient-start: #242933;
   --bg-gradient-end: #2e3440;
-  --card-bg: rgba(59, 66, 82, 0.5);
-  --card-border: rgba(67, 76, 94, 0.6);
-  --sidebar-bg: rgba(46, 52, 64, 0.98);
+  --card-bg: rgb(59 66 82 / 50%);
+  --card-border: rgb(67 76 94 / 60%);
+  --sidebar-bg: rgb(46 52 64 / 98%);
   --text-primary: #eceff4;
   --text-secondary: #d8dee9;
   --text-muted: #7b88a1;
   --accent: #88c0d0;
   --accent-hover: #8fbcbb;
-  --accent-glow: rgba(136, 192, 208, 0.3);
+  --accent-glow: rgb(136 192 208 / 30%);
   --correct: #a3be8c;
   --incorrect: #bf616a;
   --pending: #616e88;
@@ -107,15 +108,15 @@
 :root[data-theme="catppuccin-mocha"] {
   --bg-gradient-start: #181825;
   --bg-gradient-end: #1e1e2e;
-  --card-bg: rgba(49, 50, 68, 0.4);
-  --card-border: rgba(69, 71, 90, 0.5);
-  --sidebar-bg: rgba(30, 30, 46, 0.98);
+  --card-bg: rgb(49 50 68 / 40%);
+  --card-border: rgb(69 71 90 / 50%);
+  --sidebar-bg: rgb(30 30 46 / 98%);
   --text-primary: #cdd6f4;
   --text-secondary: #bac2de;
   --text-muted: #6c7086;
   --accent: #cba6f7;
   --accent-hover: #d4b8fa;
-  --accent-glow: rgba(203, 166, 247, 0.3);
+  --accent-glow: rgb(203 166 247 / 30%);
   --correct: #a6e3a1;
   --incorrect: #f38ba8;
   --pending: #585b70;
@@ -126,15 +127,15 @@
 :root[data-theme="gruvbox-dark"] {
   --bg-gradient-start: #1d2021;
   --bg-gradient-end: #282828;
-  --card-bg: rgba(60, 56, 54, 0.5);
-  --card-border: rgba(80, 73, 69, 0.6);
-  --sidebar-bg: rgba(40, 40, 40, 0.98);
+  --card-bg: rgb(60 56 54 / 50%);
+  --card-border: rgb(80 73 69 / 60%);
+  --sidebar-bg: rgb(40 40 40 / 98%);
   --text-primary: #ebdbb2;
   --text-secondary: #d5c4a1;
   --text-muted: #928374;
   --accent: #fe8019;
   --accent-hover: #fabd2f;
-  --accent-glow: rgba(254, 128, 25, 0.3);
+  --accent-glow: rgb(254 128 25 / 30%);
   --correct: #b8bb26;
   --incorrect: #fb4934;
   --pending: #7c6f64;
@@ -145,15 +146,15 @@
 :root[data-theme="monokai"] {
   --bg-gradient-start: #1e1f1c;
   --bg-gradient-end: #272822;
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --sidebar-bg: rgba(39, 40, 34, 0.98);
+  --card-bg: rgb(255 255 255 / 3%);
+  --card-border: rgb(255 255 255 / 8%);
+  --sidebar-bg: rgb(39 40 34 / 98%);
   --text-primary: #f8f8f2;
   --text-secondary: #cfcfc2;
   --text-muted: #75715e;
   --accent: #a6e22e;
   --accent-hover: #b6f23e;
-  --accent-glow: rgba(166, 226, 46, 0.3);
+  --accent-glow: rgb(166 226 46 / 30%);
   --correct: #a6e22e;
   --incorrect: #f92672;
   --pending: #75715e;
@@ -168,15 +169,15 @@
 :root[data-theme="catppuccin-latte"] {
   --bg-gradient-start: #e6e9ef;
   --bg-gradient-end: #eff1f5;
-  --card-bg: rgba(220, 224, 232, 0.5);
-  --card-border: rgba(172, 176, 190, 0.4);
-  --sidebar-bg: rgba(239, 241, 245, 0.98);
+  --card-bg: rgb(220 224 232 / 50%);
+  --card-border: rgb(172 176 190 / 40%);
+  --sidebar-bg: rgb(239 241 245 / 98%);
   --text-primary: #4c4f69;
   --text-secondary: #5c5f77;
   --text-muted: #8c8fa1;
   --accent: #8839ef;
   --accent-hover: #9d4edd;
-  --accent-glow: rgba(136, 57, 239, 0.2);
+  --accent-glow: rgb(136 57 239 / 20%);
   --correct: #40a02b;
   --incorrect: #d20f39;
   --pending: #acb0be;
@@ -187,15 +188,15 @@
 :root[data-theme="gruvbox-light"] {
   --bg-gradient-start: #f2e5bc;
   --bg-gradient-end: #fbf1c7;
-  --card-bg: rgba(213, 196, 161, 0.4);
-  --card-border: rgba(189, 174, 147, 0.5);
-  --sidebar-bg: rgba(251, 241, 199, 0.98);
+  --card-bg: rgb(213 196 161 / 40%);
+  --card-border: rgb(189 174 147 / 50%);
+  --sidebar-bg: rgb(251 241 199 / 98%);
   --text-primary: #3c3836;
   --text-secondary: #504945;
   --text-muted: #7c6f64;
   --accent: #d65d0e;
   --accent-hover: #af3a03;
-  --accent-glow: rgba(214, 93, 14, 0.2);
+  --accent-glow: rgb(214 93 14 / 20%);
   --correct: #79740e;
   --incorrect: #cc241d;
   --pending: #a89984;
@@ -206,15 +207,15 @@
 :root[data-theme="sepia"] {
   --bg-gradient-start: #f4ecd8;
   --bg-gradient-end: #faf8f0;
-  --card-bg: rgba(215, 200, 170, 0.3);
-  --card-border: rgba(180, 160, 130, 0.3);
-  --sidebar-bg: rgba(250, 248, 240, 0.98);
+  --card-bg: rgb(215 200 170 / 30%);
+  --card-border: rgb(180 160 130 / 30%);
+  --sidebar-bg: rgb(250 248 240 / 98%);
   --text-primary: #433422;
   --text-secondary: #5c4a34;
   --text-muted: #8b7355;
   --accent: #8b4513;
   --accent-hover: #a0522d;
-  --accent-glow: rgba(139, 69, 19, 0.2);
+  --accent-glow: rgb(139 69 19 / 20%);
   --correct: #2d5016;
   --incorrect: #a52a2a;
   --pending: #b0a090;
@@ -231,16 +232,16 @@
 
 .dropdown-trigger {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  color: var(--text-primary);
   padding: 0.75rem 1rem;
+  border: 1px solid var(--card-border);
   border-radius: 10px;
-  font-size: 0.95rem;
+  background: var(--card-bg);
+  color: var(--text-primary);
   font-family: inherit;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -248,8 +249,8 @@
 .dropdown-trigger:hover,
 .dropdown-trigger:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 12px var(--accent-glow);
   outline: none;
+  box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .dropdown-value {
@@ -263,14 +264,14 @@
 
 .dropdown-value-icon {
   display: flex;
-  align-items: center;
   flex-shrink: 0;
+  align-items: center;
 }
 
 .dropdown-chevron {
+  flex-shrink: 0;
   color: var(--text-muted);
   transition: transform 0.2s ease;
-  flex-shrink: 0;
 }
 
 .dropdown-chevron.open {
@@ -280,16 +281,16 @@
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 0.5rem);
-  left: 0;
   right: 0;
-  background: var(--sidebar-bg);
+  left: 0;
+  z-index: 200;
+  max-height: 320px;
+  padding: 0.5rem;
+  overflow-y: auto;
   border: 1px solid var(--card-border);
   border-radius: 12px;
-  padding: 0.5rem;
-  z-index: 200;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  max-height: 320px;
-  overflow-y: auto;
+  background: var(--sidebar-bg);
+  box-shadow: 0 10px 40px rgb(0 0 0 / 30%);
 }
 
 .dropdown-group {
@@ -297,12 +298,12 @@
 }
 
 .dropdown-group-label {
+  padding: 0.5rem 0.75rem 0.4rem;
+  color: var(--text-muted);
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 0.5rem 0.75rem 0.4rem;
+  text-transform: uppercase;
 }
 
 .dropdown-item {
@@ -311,15 +312,15 @@
   gap: 0.6rem;
   width: 100%;
   padding: 0.6rem 0.75rem;
-  background: transparent;
   border: none;
   border-radius: 8px;
+  background: transparent;
   color: var(--text-primary);
-  font-size: 0.9rem;
   font-family: inherit;
+  font-size: 0.9rem;
+  text-align: left;
   cursor: pointer;
   transition: all 0.15s ease;
-  text-align: left;
 }
 
 .dropdown-item:hover {
@@ -333,8 +334,8 @@
 
 .dropdown-item-icon {
   display: flex;
-  align-items: center;
   flex-shrink: 0;
+  align-items: center;
 }
 
 .dropdown-item-label {
@@ -345,14 +346,14 @@
 }
 
 .dropdown-check {
-  color: var(--accent);
   flex-shrink: 0;
+  color: var(--accent);
 }
 
 .dropdown-divider {
   height: 1px;
-  background: var(--card-border);
   margin: 0.4rem 0.5rem;
+  background: var(--card-border);
 }
 
 /* ============================================
@@ -365,11 +366,11 @@
 
 /* Theme color preview dots */
 .theme-color-dot {
+  flex-shrink: 0;
   width: 14px;
   height: 14px;
-  border-radius: 50%;
-  flex-shrink: 0;
   border: 2px solid var(--card-border);
+  border-radius: 50%;
 }
 
 /* Preview colors for each theme */
@@ -422,7 +423,7 @@
 }
 
 .passage-dropdown .dropdown-trigger {
-  background: var(--card-bg);
   border: 1px solid var(--card-border);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
 }
