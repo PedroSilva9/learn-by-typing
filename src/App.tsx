@@ -17,6 +17,7 @@ function App() {
 
   const inputRef = useRef<HTMLInputElement>(null)
   const isComposingRef = useRef<boolean>(false)
+  const skipNextInputRef = useRef<boolean>(false)
   const strictRef = useRef<boolean>(strict)
 
   // Keep strictRef in sync with strict state
@@ -94,6 +95,7 @@ function App() {
 
   const handleCompositionStart = () => {
     isComposingRef.current = true
+    skipNextInputRef.current = false
   }
 
   const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
@@ -107,11 +109,16 @@ function App() {
     if (inputRef.current) {
       inputRef.current.value = ''
     }
+    skipNextInputRef.current = true
   }
 
   const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
     if (finished) return
     if (isComposingRef.current) return
+    if (skipNextInputRef.current) {
+      skipNextInputRef.current = false
+      return
+    }
 
     const input = e.currentTarget
     const value = input.value
