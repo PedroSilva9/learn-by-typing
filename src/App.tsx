@@ -72,6 +72,13 @@ function App() {
     }
   }, [sidebarOpen])
 
+  // Set finished when typing is complete
+  useEffect(() => {
+    if (typed.length > 0 && typed.length === targetText.length) {
+      setFinished(true)
+    }
+  }, [typed, targetText])
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (finished) return
     if (isComposingRef.current) return
@@ -137,10 +144,6 @@ function App() {
           newTyped = newTyped + char
         }
         // In strict mode with wrong char, do nothing (char is rejected)
-      }
-
-      if (newTyped.length === targetText.length) {
-        setFinished(true)
       }
 
       return newTyped
