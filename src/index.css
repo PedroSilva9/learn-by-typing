@@ -1,15 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import './themes.css';
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-:root {
-  --bg-gradient-start: #0f0f1a;
-  --bg-gradient-end: #1a1a2e;
-  --text-primary: #e4e4e7;
 }
 
 html, body, #root {

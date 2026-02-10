@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { passages } from "./data/passages";
 import type { Passage } from "./data/passages";
+import { ThemeSelector } from "./components/ThemeSelector";
+import { PassageSelector } from "./components/PassageSelector";
 import "./App.css";
 
 function App() {
@@ -263,6 +265,11 @@ function App() {
                 : "Single-word translations are hidden."}
             </p>
           </div>
+
+          <div className="setting-group">
+            <h3>Theme</h3>
+            <ThemeSelector />
+          </div>
         </div>
       </aside>
 
@@ -284,26 +291,11 @@ function App() {
         <header className="header">
           <h1>German Typing Practice</h1>
           <div className="controls">
-            <div className="select-wrapper">
-              <select
-                className="passage-select"
-                value={activePassage.id}
-                onChange={(e) => {
-                  setActivePassage(passages.find((p) => p.id === e.target.value)!);
-                }}
-              >
-                {passages.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.title}
-                  </option>
-                ))}
-              </select>
-              <span className="select-icon" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </span>
-            </div>
+            <PassageSelector
+              passages={passages}
+              activePassage={activePassage}
+              onSelect={setActivePassage}
+            />
 
             <button onClick={reset} className="restart-btn">
               Restart
