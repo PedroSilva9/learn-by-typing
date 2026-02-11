@@ -14,6 +14,8 @@ For that reason, I created this project: a simple German typing practice app tha
 
 - React + TypeScript
 - Vite
+- Biome (linting and formatting)
+- Docker support
 
 ## Getting Started
 
@@ -22,28 +24,26 @@ Prerequisites:
 - Node.js
 - npm
 
-Install dependencies:
+## Docker
+
+Run the application with Docker Compose:
 
 ```bash
-npm install
+docker-compose up
 ```
 
-Run the dev server:
+The app will be available at http://localhost:5173
+
+## Development Tools
+
+### Linting and Formatting
+
+This project uses Biome for linting and formatting. Run the following commands:
 
 ```bash
-npm run dev
-```
+# Check for linting/formatting issues
+npm run lint
 
-## Production Build
-
-Build:
-
-```bash
-npm run build
-```
-
-Preview the build locally:
-
-```bash
-npm run preview
+# Fix issues automatically
+npm run format
 ```
