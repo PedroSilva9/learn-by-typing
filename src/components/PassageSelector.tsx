@@ -1,5 +1,5 @@
-import { Dropdown } from './Dropdown';
 import type { Passage } from '../data/passages';
+import { Dropdown } from './Dropdown';
 
 interface PassageSelectorProps {
   passages: Passage[];

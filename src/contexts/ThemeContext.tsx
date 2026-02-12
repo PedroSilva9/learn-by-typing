@@ -1,4 +1,12 @@
-import { createContext, type ReactNode, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 export type ThemeName =
   | 'tokyo-night'
@@ -10,12 +18,12 @@ export type ThemeName =
   | 'monokai'
   | 'catppuccin-latte'
   | 'gruvbox-light'
-  | 'sepia'
+  | 'sepia';
 
 export interface ThemeInfo {
-  id: ThemeName
-  name: string
-  category: 'dark' | 'light'
+  id: ThemeName;
+  name: string;
+  category: 'dark' | 'light';
 }
 
 export const themes: ThemeInfo[] = [
@@ -31,56 +39,54 @@ export const themes: ThemeInfo[] = [
   { id: 'catppuccin-latte', name: 'Catppuccin Latte', category: 'light' },
   { id: 'gruvbox-light', name: 'Gruvbox Light', category: 'light' },
   { id: 'sepia', name: 'Sepia / Paper', category: 'light' },
-]
+];
 
-const STORAGE_KEY = 'learn-by-typing-theme'
-const DEFAULT_THEME: ThemeName = 'tokyo-night'
+const STORAGE_KEY = 'learn-by-typing-theme';
+const DEFAULT_THEME: ThemeName = 'tokyo-night';
 
 interface ThemeContextValue {
-  theme: ThemeName
-  setTheme: (theme: ThemeName) => void
-  themes: ThemeInfo[]
+  theme: ThemeName;
+  setTheme: (theme: ThemeName) => void;
+  themes: ThemeInfo[];
 }
 
-const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 function getInitialTheme(): ThemeName {
-  if (typeof window === 'undefined') return DEFAULT_THEME
-
-  const stored = localStorage.getItem(STORAGE_KEY)
+  const stored = localStorage.getItem(STORAGE_KEY);
   if (stored && themes.some((t) => t.id === stored)) {
-    return stored as ThemeName
+    return stored as ThemeName;
   }
 
-  return DEFAULT_THEME
+  return DEFAULT_THEME;
 }
 
 interface ThemeProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState<ThemeName>(getInitialTheme)
+  const [theme, setThemeState] = useState<ThemeName>(getInitialTheme);
 
-  const setTheme = (newTheme: ThemeName) => {
-    setThemeState(newTheme)
-    localStorage.setItem(STORAGE_KEY, newTheme)
-  }
+  const setTheme = useCallback((newTheme: ThemeName) => {
+    setThemeState(newTheme);
+    localStorage.setItem(STORAGE_KEY, newTheme);
+  }, []);
 
   useEffect(() => {
     // Apply theme to document element
-    document.documentElement.setAttribute('data-theme', theme)
-  }, [theme])
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme, themes }}>{children}</ThemeContext.Provider>
-  )
+  const value = useMemo(() => ({ theme, setTheme, themes }), [theme, setTheme]);
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme(): ThemeContextValue {
-  const context = useContext(ThemeContext)
+  const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider')
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
-  return context
+  return context;
 }
