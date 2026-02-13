@@ -20,6 +20,7 @@ interface DropdownProps {
   groups?: DropdownGroup[];
   placeholder?: string;
   className?: string;
+  'aria-label'?: string;
 }
 
 export function Dropdown({
@@ -29,6 +30,7 @@ export function Dropdown({
   groups,
   placeholder = 'Select...',
   className = '',
+  'aria-label': ariaLabel,
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -92,6 +94,7 @@ export function Dropdown({
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
+        aria-label={ariaLabel}
         type="button"
       >
         <span className="dropdown-value">

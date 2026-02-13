@@ -281,6 +281,7 @@
 
 .dropdown-chevron {
   flex-shrink: 0;
+  margin-left: 0.6rem;
   color: var(--text-muted);
   transition: transform 0.2s ease;
 }
