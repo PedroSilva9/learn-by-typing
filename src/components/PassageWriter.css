@@ -7,6 +7,7 @@
 }
 
 .column {
+  position: relative;
   padding: 1.75rem 2rem;
   border: 1px solid var(--card-border);
   border-radius: 20px;
@@ -143,12 +144,12 @@
   }
 }
 
-/* Hidden Input */
+/* Hidden Input - positioned to cover text area for mobile focus support */
 .hidden-input {
   position: absolute;
-  left: -9999px;
+  inset: 0;
   opacity: 0;
-  pointer-events: none;
+  cursor: text;
 }
 
 /* Responsive */

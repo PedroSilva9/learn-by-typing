@@ -253,6 +253,19 @@ export function PassageWriter({ passage, strict, showWordGloss, sidebarOpen }: P
       <main className="main">
         <div className="column german-column">
           <h2>Deutsch</h2>
+          <input
+            ref={inputRef}
+            type="text"
+            className="hidden-input"
+            onKeyDown={handleKeyDown}
+            onCompositionStart={handleCompositionStart}
+            onCompositionEnd={handleCompositionEnd}
+            onInput={handleInput}
+            autoComplete="off"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+          />
           <div className="text-display">{textContent}</div>
         </div>
         <div className="column english-column">
@@ -260,20 +273,6 @@ export function PassageWriter({ passage, strict, showWordGloss, sidebarOpen }: P
           <div className="text-display translation">{passage.en}</div>
         </div>
       </main>
-
-      <input
-        ref={inputRef}
-        type="text"
-        className="hidden-input"
-        onKeyDown={handleKeyDown}
-        onCompositionStart={handleCompositionStart}
-        onCompositionEnd={handleCompositionEnd}
-        onInput={handleInput}
-        autoComplete="off"
-        autoCapitalize="off"
-        autoCorrect="off"
-        spellCheck={false}
-      />
     </>
   );
 }
