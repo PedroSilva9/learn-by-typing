@@ -11,6 +11,7 @@
   --bg-gradient-end: #16161f;
   --card-bg: rgb(255 255 255 / 2%);
   --card-border: rgb(255 255 255 / 6%);
+  --card-border-hover: rgb(255 255 255 / 10%);
   --sidebar-bg: rgb(20 20 28 / 98%);
   --text-primary: #e4e4e7;
   --text-secondary: #a1a1aa;
@@ -34,6 +35,7 @@
   --bg-gradient-end: #16161f;
   --card-bg: rgb(255 255 255 / 2%);
   --card-border: rgb(255 255 255 / 6%);
+  --card-border-hover: rgb(255 255 255 / 10%);
   --sidebar-bg: rgb(20 20 28 / 98%);
   --text-primary: #e4e4e7;
   --text-secondary: #a1a1aa;
@@ -53,6 +55,7 @@
   --bg-gradient-end: #282a36;
   --card-bg: rgb(68 71 90 / 30%);
   --card-border: rgb(98 114 164 / 30%);
+  --card-border-hover: rgb(255 255 255 / 10%);
   --sidebar-bg: rgb(40 42 54 / 98%);
   --text-primary: #f8f8f2;
   --text-secondary: #bfbfbf;
@@ -72,6 +75,7 @@
   --bg-gradient-end: #282c34;
   --card-bg: rgb(255 255 255 / 3%);
   --card-border: rgb(255 255 255 / 8%);
+  --card-border-hover: rgb(255 255 255 / 10%);
   --sidebar-bg: rgb(33 37 43 / 98%);
   --text-primary: #abb2bf;
   --text-secondary: #9299a8;
@@ -91,6 +95,7 @@
   --bg-gradient-end: #2e3440;
   --card-bg: rgb(59 66 82 / 50%);
   --card-border: rgb(67 76 94 / 60%);
+  --card-border-hover: rgb(255 255 255 / 10%);
   --sidebar-bg: rgb(46 52 64 / 98%);
   --text-primary: #eceff4;
   --text-secondary: #d8dee9;
@@ -110,6 +115,7 @@
   --bg-gradient-end: #1e1e2e;
   --card-bg: rgb(49 50 68 / 40%);
   --card-border: rgb(69 71 90 / 50%);
+  --card-border-hover: rgb(255 255 255 / 10%);
   --sidebar-bg: rgb(30 30 46 / 98%);
   --text-primary: #cdd6f4;
   --text-secondary: #bac2de;
@@ -129,6 +135,7 @@
   --bg-gradient-end: #282828;
   --card-bg: rgb(60 56 54 / 50%);
   --card-border: rgb(80 73 69 / 60%);
+  --card-border-hover: rgb(255 255 255 / 10%);
   --sidebar-bg: rgb(40 40 40 / 98%);
   --text-primary: #ebdbb2;
   --text-secondary: #d5c4a1;
@@ -148,6 +155,7 @@
   --bg-gradient-end: #272822;
   --card-bg: rgb(255 255 255 / 3%);
   --card-border: rgb(255 255 255 / 8%);
+  --card-border-hover: rgb(255 255 255 / 10%);
   --sidebar-bg: rgb(39 40 34 / 98%);
   --text-primary: #f8f8f2;
   --text-secondary: #cfcfc2;
@@ -171,6 +179,7 @@
   --bg-gradient-end: #eff1f5;
   --card-bg: rgb(220 224 232 / 50%);
   --card-border: rgb(172 176 190 / 40%);
+  --card-border-hover: rgb(0 0 0 / 15%);
   --sidebar-bg: rgb(239 241 245 / 98%);
   --text-primary: #4c4f69;
   --text-secondary: #5c5f77;
@@ -190,6 +199,7 @@
   --bg-gradient-end: #fbf1c7;
   --card-bg: rgb(213 196 161 / 40%);
   --card-border: rgb(189 174 147 / 50%);
+  --card-border-hover: rgb(0 0 0 / 15%);
   --sidebar-bg: rgb(251 241 199 / 98%);
   --text-primary: #3c3836;
   --text-secondary: #504945;
@@ -209,6 +219,7 @@
   --bg-gradient-end: #faf8f0;
   --card-bg: rgb(215 200 170 / 30%);
   --card-border: rgb(180 160 130 / 30%);
+  --card-border-hover: rgb(0 0 0 / 15%);
   --sidebar-bg: rgb(250 248 240 / 98%);
   --text-primary: #433422;
   --text-secondary: #5c4a34;

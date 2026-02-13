@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc && vite build",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "lint:css": "stylelint \"src/**/*.css\"",
@@ -24,15 +24,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.14",
-    "@types/node": "25.2.2",
     "@types/react": "19.2.13",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "5.1.4",
-    "husky": "9.1.7",
-    "lint-staged": "16.2.7",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "stylelint": "16.11.0",
     "stylelint-config-standard": "36.0.1",
-    "stylelint-order": "6.0.4",
     "typescript": "5.9.3",
     "vite": "7.3.1"
   },

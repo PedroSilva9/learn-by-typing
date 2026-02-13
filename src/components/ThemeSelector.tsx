@@ -1,13 +1,8 @@
+import { type ThemeName, useTheme } from '../contexts/ThemeContext';
 import { Dropdown } from './Dropdown';
-import { useTheme, type ThemeName } from '../contexts/ThemeContext';
 
 function ThemeColorDot({ themeId }: { themeId: string }) {
-  return (
-    <span
-      className="theme-color-dot"
-      data-theme-preview={themeId}
-    />
-  );
+  return <span className="theme-color-dot" data-theme-preview={themeId} />;
 }
 
 export function ThemeSelector() {
@@ -36,9 +31,9 @@ export function ThemeSelector() {
   ];
 
   return (
-    <Dropdown<ThemeName>
+    <Dropdown
       value={theme}
-      onChange={setTheme}
+      onChange={(value) => setTheme(value as ThemeName)}
       groups={groups}
       className="theme-dropdown"
     />

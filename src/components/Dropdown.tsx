@@ -1,42 +1,45 @@
-import { useState, useRef, useEffect, type ReactNode } from 'react';
+import { faCheck, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 
-export interface DropdownOption<T extends string = string> {
-  id: T;
+export interface DropdownOption {
+  id: string;
   label: string;
   icon?: ReactNode;
 }
 
-export interface DropdownGroup<T extends string = string> {
+export interface DropdownGroup {
   label: string;
-  options: DropdownOption<T>[];
+  options: DropdownOption[];
 }
 
-interface DropdownProps<T extends string = string> {
-  value: T;
-  onChange: (value: T) => void;
-  options?: DropdownOption<T>[];
-  groups?: DropdownGroup<T>[];
+interface DropdownProps {
+  value: string;
+  onChange: (value: string) => void;
+  options?: DropdownOption[];
+  groups?: DropdownGroup[];
   placeholder?: string;
   className?: string;
 }
 
-export function Dropdown<T extends string = string>({
+export function Dropdown({
   value,
   onChange,
   options,
   groups,
   placeholder = 'Select...',
   className = '',
-}: DropdownProps<T>) {
+}: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Flatten all options for lookup
-  const allOptions = groups
-    ? groups.flatMap((g) => g.options)
-    : options ?? [];
+  const allOptions = useMemo(
+    () => (groups ? groups.flatMap((g) => g.options) : (options ?? [])),
+    [groups, options],
+  );
 
-  const currentOption = allOptions.find((o) => o.id === value);
+  const currentOption = useMemo(() => allOptions.find((o) => o.id === value), [allOptions, value]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -62,12 +65,12 @@ export function Dropdown<T extends string = string>({
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
-  const handleSelect = (option: DropdownOption<T>) => {
+  const handleSelect = (option: DropdownOption) => {
     onChange(option.id);
     setIsOpen(false);
   };
 
-  const renderOption = (option: DropdownOption<T>) => (
+  const renderOption = (option: DropdownOption) => (
     <button
       key={option.id}
       className={`dropdown-item ${option.id === value ? 'selected' : ''}`}
@@ -76,21 +79,9 @@ export function Dropdown<T extends string = string>({
       aria-selected={option.id === value}
       type="button"
     >
-      {option.icon && <span className="dropdown-item-icon">{option.icon}</span>}
+      {option.icon ? <span className="dropdown-item-icon">{option.icon}</span> : null}
       <span className="dropdown-item-label">{option.label}</span>
-      {option.id === value && (
-        <svg
-          className="dropdown-check"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-        >
-          <path d="M5 12l5 5L20 7" />
-        </svg>
-      )}
+      {option.id === value ? <FontAwesomeIcon icon={faCheck} className="dropdown-check" /> : null}
     </button>
   );
 
@@ -104,30 +95,23 @@ export function Dropdown<T extends string = string>({
         type="button"
       >
         <span className="dropdown-value">
-          {currentOption?.icon && (
+          {currentOption?.icon ? (
             <span className="dropdown-value-icon">{currentOption.icon}</span>
-          )}
+          ) : null}
           {currentOption?.label ?? placeholder}
         </span>
-        <svg
+        <FontAwesomeIcon
+          icon={faChevronDown}
           className={`dropdown-chevron ${isOpen ? 'open' : ''}`}
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
+        />
       </button>
 
-      {isOpen && (
+      {isOpen ? (
         <div className="dropdown-menu" role="listbox">
           {groups ? (
             groups.map((group, index) => (
               <div key={group.label}>
-                {index > 0 && <div className="dropdown-divider" />}
+                {index > 0 ? <div className="dropdown-divider" /> : null}
                 <div className="dropdown-group">
                   <div className="dropdown-group-label">{group.label}</div>
                   {group.options.map(renderOption)}
@@ -135,12 +119,10 @@ export function Dropdown<T extends string = string>({
               </div>
             ))
           ) : (
-            <div className="dropdown-group">
-              {allOptions.map(renderOption)}
-            </div>
+            <div className="dropdown-group">{allOptions.map(renderOption)}</div>
           )}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -1,9 +1,9 @@
 export interface Passage {
-  id: string
-  title: string
-  de: string
-  en: string
-  gloss: string[]
+  id: string;
+  title: string;
+  de: string;
+  en: string;
+  gloss: string[];
 }
 
 export const passages: Passage[] = [
@@ -178,4 +178,4 @@ export const passages: Passage[] = [
       'colleagues',
     ],
   },
-]
+];

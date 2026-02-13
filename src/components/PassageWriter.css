@@ -1,0 +1,164 @@
+/* Main Layout */
+.main {
+  display: grid;
+  flex: 1;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.column {
+  position: relative;
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.column:hover {
+  border-color: var(--card-border-hover);
+}
+
+.column h2 {
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.text-display {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.3rem;
+  line-height: 2.2;
+  letter-spacing: 0.01em;
+  white-space: pre-wrap;
+}
+
+.translation {
+  color: var(--text-secondary);
+}
+
+.word-token {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word-text {
+  display: inline-flex;
+}
+
+.word-gloss {
+  min-height: 1em;
+  margin-top: 0;
+  color: var(--text-muted);
+  font-size: 0.65em;
+  line-height: 1;
+  text-align: center;
+}
+
+.word-separator {
+  display: inline-block;
+}
+
+/* Character Styling */
+.char {
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.char.pending {
+  color: var(--pending);
+}
+
+.char.correct {
+  color: var(--correct);
+}
+
+.char.incorrect {
+  color: var(--incorrect);
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--incorrect);
+  text-underline-offset: 4px;
+}
+
+.char.current {
+  color: var(--text-primary);
+}
+
+/* Cursor */
+.cursor {
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--cursor) 75%, transparent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Finished Banner */
+.finished-banner {
+  padding: 1rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--correct), #059669);
+  box-shadow: 0 4px 20px rgb(16 185 129 / 30%);
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.01);
+  }
+}
+
+/* Hidden Input - positioned to cover text area for mobile focus support */
+.hidden-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: text;
+}
+
+/* Responsive */
+@media (width <= 900px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+
+  .text-display {
+    font-size: 1.1rem;
+  }
+}
