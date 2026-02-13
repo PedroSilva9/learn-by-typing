@@ -233,7 +233,7 @@ export function PassageWriter({ passage, strict, showWordGloss, sidebarOpen }: P
         );
       }
 
-      const gloss = passage.gloss[token.wordIndex] ?? '';
+      const gloss = passage.gloss?.[token.wordIndex] ?? '';
 
       return (
         <span key={`word-${token.startIndex}`} className="word-token">
