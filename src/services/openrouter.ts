@@ -1,4 +1,5 @@
 import { OpenRouter } from '@openrouter/sdk';
+import { OpenRouterError } from '@openrouter/sdk/models/errors';
 import type { GermanLevel } from '../components/GermanLevelSelector';
 import { getSystemPrompt } from '../prompts/germanText';
 import type { GeneratedPassage } from '../types/generatedPassage';
@@ -28,7 +29,7 @@ export async function generateGermanText(level: GermanLevel): Promise<GeneratedP
     httpReferer: window.location.origin,
     xTitle: 'Learn by Typing - German Practice',
     chatGenerationParams: {
-      model: 'openrouter/free',
+      model: 'z-ai/glm-4.5-air:free',
       messages: [
         {
           role: 'system' as const,
@@ -85,13 +86,11 @@ export async function generateGermanText(level: GermanLevel): Promise<GeneratedP
 
     return parsed as GeneratedPassage;
   } catch (error) {
-    if (
-      error instanceof Error &&
-      (error.message.includes('free-models-per-day') || error.message.includes('429'))
-    ) {
+    if (error instanceof OpenRouterError && error.statusCode >= 400 && error.statusCode < 500) {
       return MOCK_RESPONSE;
     }
-    throw error;
+    console.warn('API call failed, using mock response:', error);
+    return MOCK_RESPONSE;
   }
 }
 
