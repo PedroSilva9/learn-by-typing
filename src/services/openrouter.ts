@@ -1,27 +1,15 @@
 import { OpenRouter } from '@openrouter/sdk';
 import { OpenRouterError } from '@openrouter/sdk/models/errors';
 import type { GermanLevel } from '../components/GermanLevelSelector';
+import { getRandomMockPassage } from '../data/mockPassages';
 import { getSystemPrompt } from '../prompts/germanText';
 import type { GeneratedPassage } from '../types/generatedPassage';
 
-const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
-
-const MOCK_RESPONSE: GeneratedPassage = {
-  title: 'Mock Text',
-  german: 'Dies ist ein kurzer Beispieltext. Er hilft beim Testen.',
-  english: 'This is a short sample text. It helps with testing.',
-};
-
-const openrouter = new OpenRouter({
-  apiKey: API_KEY,
-});
-
-export async function generateGermanText(level: GermanLevel): Promise<GeneratedPassage> {
-  if (!API_KEY) {
-    throw new Error(
-      'API key not configured. Please set VITE_OPENROUTER_API_KEY in your .env file.',
-    );
-  }
+export async function generateGermanText(
+  level: GermanLevel,
+  apiKey: string,
+): Promise<GeneratedPassage> {
+  const openrouter = new OpenRouter({ apiKey });
 
   const systemPrompt = getSystemPrompt(level);
 
@@ -77,20 +65,34 @@ export async function generateGermanText(level: GermanLevel): Promise<GeneratedP
       throw new Error('No content received from API');
     }
 
-    const contentStr = typeof content === 'string' ? content : JSON.stringify(content);
+    let contentStr = typeof content === 'string' ? content : JSON.stringify(content);
+    // Strip markdown code fences if the model wrapped the JSON
+    contentStr = contentStr
+      .replace(/^```(?:json)?\s*/i, '')
+      .replace(/\s*```$/, '')
+      .trim();
     const parsed = JSON.parse(contentStr);
 
-    if (!parsed.title || !parsed.german || !parsed.english) {
+    // Normalise field names: model sometimes uses 'text' instead of 'german'/'english'
+    if (!parsed.german && parsed.text) {
+      parsed.german = parsed.text;
+    }
+
+    if (!parsed.title || !parsed.german) {
       throw new Error('Invalid response structure');
     }
 
-    return parsed as GeneratedPassage;
+    return {
+      title: parsed.title,
+      german: parsed.german,
+      english: parsed.english ?? '',
+    } satisfies GeneratedPassage;
   } catch (error) {
     if (error instanceof OpenRouterError && error.statusCode >= 400 && error.statusCode < 500) {
-      return MOCK_RESPONSE;
+      throw error;
     }
     console.warn('API call failed, using mock response:', error);
-    return MOCK_RESPONSE;
+    return getRandomMockPassage();
   }
 }
 

@@ -24,72 +24,85 @@ body {
   min-height: 100%;
 }
 
-/* Sidebar */
-.sidebar {
+/* Settings Toggle Button */
+.settings-toggle {
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  width: 320px;
-  height: 100vh;
-  border-right: 1px solid var(--card-border);
-  background: var(--sidebar-bg);
-  backdrop-filter: blur(20px);
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.sidebar.open {
-  transform: translateX(0);
-}
-
-.sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--card-border);
-}
-
-.sidebar-header h2 {
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.sidebar-close {
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 50;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem;
-  border: none;
+  padding: 0.75rem;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.settings-toggle:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+  color: var(--accent);
+}
+
+/* Settings Page */
+.settings-page {
+  max-width: 640px;
+  padding-left: 2rem;
+}
+
+.settings-page-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--card-border);
+  margin-bottom: 2rem;
+}
+
+.settings-page-header h2 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.settings-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--card-border);
   border-radius: 8px;
-  background: none;
-  color: var(--text-muted);
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.sidebar-close:hover {
-  background: var(--card-bg);
-  color: var(--text-primary);
+.settings-back-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-.sidebar-content {
-  flex: 1;
-  padding: 1.5rem;
-  overflow-y: auto;
+.settings-page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
 }
 
-.setting-group {
-  margin-bottom: 2rem;
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.setting-group h3 {
-  margin-bottom: 1rem;
+.settings-section h3 {
   color: var(--text-muted);
   font-size: 0.75rem;
   font-weight: 600;
@@ -97,6 +110,84 @@ body {
   text-transform: uppercase;
 }
 
+/* API Key Field */
+.api-key-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.api-key-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.api-key-input:focus {
+  border-color: var(--accent);
+}
+
+.api-key-input.api-key-valid {
+  border-color: #22c55e;
+}
+
+.api-key-input.api-key-invalid {
+  border-color: #ef4444;
+}
+
+.api-key-eye-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.api-key-eye-btn:hover {
+  color: var(--text-primary);
+}
+
+.api-key-status {
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.api-key-status.valid {
+  color: #22c55e;
+}
+
+.api-key-status.invalid {
+  color: #ef4444;
+}
+
+.api-key-hint {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.api-key-hint a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.api-key-hint a:hover {
+  text-decoration: underline;
+}
+
+/* Setting toggles (reused outside sidebar) */
 .setting-toggle {
   display: flex;
   align-items: center;
@@ -155,43 +246,25 @@ body {
 }
 
 .setting-description {
-  margin-top: 0.75rem;
   color: var(--text-muted);
   font-size: 0.8rem;
   line-height: 1.5;
 }
 
-.sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 99;
-  background: rgb(0 0 0 / 50%);
-  backdrop-filter: blur(4px);
-}
-
-/* Sidebar Toggle Button */
-.sidebar-toggle {
-  position: fixed;
-  top: 1.5rem;
-  left: 1.5rem;
-  z-index: 50;
+/* No API key prompt */
+.no-api-key-prompt {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 0.75rem;
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  background: var(--card-bg);
-  color: var(--text-secondary);
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: all 0.2s ease;
+  justify-content: center;
+  flex: 1;
+  min-height: 400px;
+  gap: 1.5rem;
 }
 
-.sidebar-toggle:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 20px var(--accent-glow);
-  color: var(--accent);
+.no-api-key-prompt p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
 }
 
 /* Main App */
@@ -288,13 +361,13 @@ body {
     gap: 0.75rem;
   }
 
-  .sidebar {
-    width: 100%;
-  }
-
-  .sidebar-toggle {
+  .settings-toggle {
     top: 1rem;
     left: 1rem;
+  }
+
+  .settings-page {
+    padding-left: 1rem;
   }
 }
 
@@ -408,6 +481,13 @@ body {
   line-height: 1.5;
 }
 
+.error-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .retry-btn {
   padding: 0.75rem 2rem;
   border: none;
@@ -423,4 +503,29 @@ body {
 .retry-btn:hover {
   box-shadow: 0 4px 16px var(--accent-glow);
   transform: translateY(-2px);
+}
+
+.mock-btn {
+  padding: 0.75rem 2rem;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mock-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.mock-text-notice {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
 }
