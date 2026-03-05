@@ -88,7 +88,12 @@ export async function generateGermanText(
       english: parsed.english ?? '',
     } satisfies GeneratedPassage;
   } catch (error) {
-    if (error instanceof OpenRouterError && error.statusCode >= 400 && error.statusCode < 500) {
+    if (
+      error instanceof OpenRouterError &&
+      error.statusCode >= 400 &&
+      error.statusCode < 500 &&
+      error.statusCode !== 429
+    ) {
       throw error;
     }
     console.warn('API call failed, using mock response:', error);

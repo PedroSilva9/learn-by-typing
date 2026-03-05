@@ -69,7 +69,12 @@ export function Dropdown({
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
+  useEffect(() => {
+    if (disabled) setIsOpen(false);
+  }, [disabled]);
+
   const handleSelect = (option: DropdownOption) => {
+    if (disabled) return;
     onChange(option.id);
     setIsOpen(false);
   };

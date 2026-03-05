@@ -377,13 +377,6 @@ function App() {
             <div className="error-container">
               <p>{generationError}</p>
               <div className="error-actions">
-                <button
-                  type="button"
-                  onClick={() => handleGenerateText(germanLevel)}
-                  className="retry-btn"
-                >
-                  Retry
-                </button>
                 <button type="button" onClick={handleUseMockText} className="mock-btn">
                   Use example text
                 </button>
