@@ -20,6 +20,8 @@ interface DropdownProps {
   groups?: DropdownGroup[];
   placeholder?: string;
   className?: string;
+  disabled?: boolean;
+  'aria-label'?: string;
 }
 
 export function Dropdown({
@@ -29,6 +31,8 @@ export function Dropdown({
   groups,
   placeholder = 'Select...',
   className = '',
+  disabled = false,
+  'aria-label': ariaLabel,
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,7 +69,12 @@ export function Dropdown({
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
+  useEffect(() => {
+    if (disabled) setIsOpen(false);
+  }, [disabled]);
+
   const handleSelect = (option: DropdownOption) => {
+    if (disabled) return;
     onChange(option.id);
     setIsOpen(false);
   };
@@ -89,9 +98,11 @@ export function Dropdown({
     <div className={`dropdown ${className}`} ref={containerRef}>
       <button
         className="dropdown-trigger"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => !disabled && setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
+        aria-label={ariaLabel}
+        disabled={disabled}
         type="button"
       >
         <span className="dropdown-value">

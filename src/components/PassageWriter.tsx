@@ -45,13 +45,13 @@ export function PassageWriter({ passage, strict, showWordGloss, sidebarOpen }: P
   }, [sidebarOpen]);
 
   useEffect(() => {
-    const handleWindowFocus = () => {
-      if (!sidebarOpen && !finished) {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && !sidebarOpen && !finished) {
         inputRef.current?.focus();
       }
     };
-    window.addEventListener('focus', handleWindowFocus);
-    return () => window.removeEventListener('focus', handleWindowFocus);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, [sidebarOpen, finished]);
 
   // Focus when clicking on text area
@@ -233,7 +233,7 @@ export function PassageWriter({ passage, strict, showWordGloss, sidebarOpen }: P
         );
       }
 
-      const gloss = passage.gloss[token.wordIndex] ?? '';
+      const gloss = passage.gloss?.[token.wordIndex] ?? '';
 
       return (
         <span key={`word-${token.startIndex}`} className="word-token">
